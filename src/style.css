@@ -1,0 +1,47 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: DIN Next W01 Regular, Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
+.starImg{
+    height: 150px;
+    width: 300px;
+    display: inline-block;
+    margin: 5px;
+}
+
+/* ///////////  MODAL   ////////////////////////// */
+.modalContainer {
+  position: fixed;
+  text-align: center;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-main {
+  position:fixed;
+  padding: 20px 50px;
+  
+  background: white;
+  width: auto;
+  height: auto;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  border: 4px solid black;
+  
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+/* ///////////  fin MODAL   ////////////////////////// */
