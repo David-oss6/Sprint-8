@@ -9,18 +9,15 @@ export default function Login({ signList, setUser, user, setUserLoged }) {
         const s = signList.filter((element) => {
             return element.name === name && element.password === pass;
         })
-        s.length === 0 ? alert("Nombre o contraseña incorrectos") : login(name)
+        if (s.length === 0) {
+            alert("Nombre o contraseña incorrectos")
+        } else {
+            setUser(name)
+            setUserLoged(true)
+        }
 
     }
-    function login(name) {
 
-        console.log(name)
-        setUser(name)
-        setUserLoged(true)
-        console.log(user)
-        JSON.stringify(user)
-        localStorage.setItem("user", user)
-    }
 
     return (
         <div>

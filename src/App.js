@@ -50,11 +50,10 @@ function App() {
     setSignModal(false)
     localStorage.removeItem("user")
   }
+
   useEffect(() => {
     JSON.stringify(userLoged)
     localStorage.setItem("userLoged", userLoged)
-  }, [userLoged])
-  useEffect(() => {
     switch (userLoged) {
       case true:
         JSON.stringify(user)
@@ -62,6 +61,7 @@ function App() {
         break;
       case false:
         localStorage.removeItem(user)
+        break
     }
   }, [userLoged])
 
