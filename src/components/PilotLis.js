@@ -1,40 +1,40 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
+import { DetDiv, MyP } from './styled'
 
-export default function PilotLis({ pilots, verPilotos }) {
+export default function PilotLis({ pilots }) {
     const [list, setList] = useState([{}])
-    console.log(pilots)
 
-    useEffect(() => {
-        var lista = [];
-        Promise.all([pilots.map((el) => {
-            return axios.get(el)
-                .then(res => console.log(res.data))
-        })])
-        setList(lista)
-        console.log(list, lista)
+    useEffect(async () => {
+
+        const d = await Promise.all(pilots.map(async (el) => {
+            var r = await axios.get(el)
+            r = r.data
+            return r;
+        }))
+        setList(d)
+        console.log('dddddddddd', d);
     }, [pilots])
 
 
     return (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
+            <h1>Pilot List</h1>
             {list.map((e) => {
-                console.log(e)
                 return (
-                    <div>
-                        <p>{e.name}</p>
-                        <p>Height: {e.height}</p>
-                        <p>Mass: {e.mass}</p>
-                        <p>Hair color:{e.hair_color}</p>
-                        <p>Skin color: {e.skin_color}</p>
-                        <p>Eye color: {e.eye_color}</p>
-                        <p>Date of birth: {e.birth_year}</p>
-                        <p>Gender: {e.gender}</p>
+                    <DetDiv>
+                        <MyP style={{ textTransform: "uppercase", fontSize: "25px", marginBottom: "10px ", color: "white" }}>{e.name}</MyP>
+                        <MyP style={{ marginLeft: "50px" }}>Height: {e.height}</MyP>
+                        <MyP style={{ marginLeft: "50px" }}>Mass: {e.mass}</MyP>
+                        <MyP style={{ marginLeft: "50px" }}>Hair color:{e.hair_color}</MyP>
+                        <MyP style={{ marginLeft: "50px" }}>Skin color: {e.skin_color}</MyP>
+                        <MyP style={{ marginLeft: "50px" }}>Eye color: {e.eye_color}</MyP>
+                        <MyP style={{ marginLeft: "50px" }}>Date of birth: {e.birth_year}</MyP>
+                        <MyP style={{ marginLeft: "50px" }}>Gender: {e.gender}</MyP>
                         <hr />
-                    </div>
+                    </DetDiv>
                 )
             })}
-
         </div>
     )
 }

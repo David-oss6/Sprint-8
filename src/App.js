@@ -17,6 +17,7 @@ import {
 import GuardedRoute from './components/GuardedRoute'
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import Movies from "./components/Movies";
 
 
 function App() {
@@ -45,7 +46,9 @@ function App() {
   const [signModal, setSignModal] = useState(false)
 
   const [pilots, setPilots] = useState([])
+  const [pelis, setPelis] = useState([])
   const [verPilotos, setVerPilotos] = useState(true)
+  const [verPelis, setVerPelis] = useState(false)
   useEffect(() => {
     JSON.stringify(userLoged)
     localStorage.setItem("userLoged", userLoged)
@@ -142,13 +145,15 @@ function App() {
 
           <Route path="/detalle">
 
-            <DetailedShip PilotLis={PilotLis} verPilotos={verPilotos} setVerPilotos={setVerPilotos} pilots={pilots} setPilots={setPilots} naveDetalle={naveDetalle} />
+            <DetailedShip PilotLis={PilotLis} pelis={pelis} setPelis={setPelis} verPilotos={verPilotos} setVerPelis={setVerPelis} setVerPilotos={setVerPilotos} pilots={pilots} setPilots={setPilots} naveDetalle={naveDetalle} />
           </Route>
 
           <Route path="/ListaPilots">
-            <PilotLis verPilotos={verPilotos} pilots={pilots} />
+            <PilotLis pilots={pilots} />
           </Route>
-
+          <Route path="/ListaPelis">
+            <Movies verPelis={verPelis} pelis={pelis} />
+          </Route>
 
         </Switch>
 

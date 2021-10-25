@@ -37,7 +37,7 @@ border-style: none;
 `
 export const LoadBtn = styled.button`
     background-color: #161616;
-    color: #888686;
+    color:white;
    font-size: large;
    padding: 3px 10px;
 `
@@ -46,20 +46,30 @@ export const LoadBtn = styled.button`
 export const MyImg = styled.img`
     border-bottom: #f07272 1px solid;
     margin: 5px 0 10px 0  ;
-    width: 600px;
+    width: 800px;
     align-self: center;
 `
 export const DetDiv = styled.div`
 align-self: center;
 background-color: black;
 color: #888686;
-width: 600px;
+width: 800px;
 margin: 10px;
 text-align: start;
 padding: 5px 20px;
 
 `
 export const MyP = styled.p`
-    margin-right: 60px;
-    align-self: center;
+    flex-shrink: 2;
+`
+
+////////  Pilot/Movie btn ****************
+
+export const PmBtn = styled.button`
+    background-color: #161616;
+    color: #888686;
+   font-size: large;
+   padding: 3px 10px;
+   margin: 15px 148px 0 0 ;
+   color: white;
 `

@@ -1,9 +1,19 @@
-import React from 'react'
 
-export default function Movies() {
+import { DetDiv, MyP } from './styled'
+export default function Movies({ pelis, verPelis }) {
+
     return (
-        <div>
-
+        <div style={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
+            <h1>Movies List</h1>
+            {verPelis && pelis.map((el) => {
+                console.log(el)
+                return <DetDiv>
+                    <p style={{ textTransform: "uppercase", fontSize: "25px", marginBottom: "10px ", color: "white" }}>{el.title}</p>
+                    <MyP>{el.opening_crawl}</MyP>
+                    <MyP>Director: {el.director}</MyP>
+                    <hr />
+                </DetDiv>
+            })}
         </div>
     )
 }

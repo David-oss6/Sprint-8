@@ -1,28 +1,22 @@
 
 import React, { useState } from 'react'
-import { DetDiv, MyImg, MyP } from './styled'
+import { DetDiv, MyImg, MyP, PmBtn } from './styled'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Movies from './Movies'
 
-export default function DetailedShip({ verPilotos, setVerPilotos, pilots, setPilots, naveDetalle }) {
+export default function DetailedShip({ verPilotos, setVerPilotos, setVerPelis, setPelis, setPilots, naveDetalle }) {
     const n = naveDetalle
-    const [movies, setMovies] = useState([])
-    const [pelicula, setPelicula] = useState([])
-    const [verPelis, setVerPelis] = useState(false)
 
-
-    function seeMovies(n) {
-        var pelis = [];
+    async function seeMovies(n) {
         console.log(n)
-        n.map((el) => {
-            axios.get(el)
-                .then(res => pelis.push(res.data))
-            setPelicula(pelis)
-        })
-
-        console.log(pelicula)
-
+        const c = await Promise.all(n.map(async (el) => {
+            var r = await axios.get(el)
+            r = r.data
+            return r;
+        }))
+        setPelis(c)
+        setVerPelis(true)
     }
 
     function seePilots(n) {
@@ -34,10 +28,10 @@ export default function DetailedShip({ verPilotos, setVerPilotos, pilots, setPil
         <div style={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
             <MyImg src={n.imgUrl} alt="" />
             <DetDiv>
-                <p style={{ textTransform: "uppercase", fontSize: "25px", marginBottom: "10px " }}>{n.name}</p>
+                <p style={{ textTransform: "uppercase", color: "white", fontSize: "25px", marginBottom: "10px " }}>{n.name}</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente pariatur dicta vel quod eius tempora cumque ipsum, ad fuga facere minus molestiae, officia temporibus quas sequi voluptate necessitatibus! Laboriosam, quidem?</p>
-                <div style={{ display: "flex", position: "relative" }}>
-                    <div style={{ marginRight: "100px" }} >
+                <div style={{ display: "flex", flexWrap: "nowrap", position: "relative" }}>
+                    <div style={{ marginRight: "180px" }} >
                         <MyP>Modelo: </MyP>
                         <MyP>Constructor: </MyP>
                         <MyP>Coste:</MyP>
@@ -53,13 +47,14 @@ export default function DetailedShip({ verPilotos, setVerPilotos, pilots, setPil
                         <MyP> {n.speed} km/h</MyP>
                         <MyP>{n.passengers}</MyP>
                     </div>
-                    <Movies />
+
                 </div>
                 <div>
-                    <button onClick={() => seeMovies(n.films)}>See Movies</button>
-
+                    <Link to="/ListaPelis" >
+                        <PmBtn onClick={() => seeMovies(n.films)}>See Movies</PmBtn>
+                    </Link>
                     <Link to="/ListaPilots">
-                        <button onClick={() => seePilots(n)}>See Pilots</button>
+                        <PmBtn onClick={() => seePilots(n)}>See Pilots</PmBtn>
                     </Link>
 
                 </div>

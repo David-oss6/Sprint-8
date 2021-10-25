@@ -32,13 +32,7 @@ export default function SignUp({ setSignList, signList, signModal, setSignModal 
             } else alert("El nombre ya existe")
         } else alert("Nombre incorrecto")
         console.log(signList)
-
-
-
-
     }
-
-
 
     return (
         <div >
