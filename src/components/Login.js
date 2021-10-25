@@ -5,7 +5,6 @@ export default function Login({ signList, setUser, user, setUserLoged }) {
     const [name, setName] = useState("zzz")
     const [pass, setPass] = useState("zzz")
     const handleLogin = () => {
-        console.log(user)
         const s = signList.filter((element) => {
             return element.name === name && element.password === pass;
         })

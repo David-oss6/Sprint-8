@@ -1,20 +1,15 @@
 import React from 'react'
+
 import { NavesBtn } from './styled.js'
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function Naves({ naves, setNaveDetalle, setIsDetalle, setIsNaves }) {
+export default function Naves({ naves, setNaveDetalle }) {
+
     const detalleNave = (name) => {
-
         const nave = naves.filter(element => {
             return element.name === name;
         })
         var x = nave[0].url.replace(/[^0-9]/g, '')
-        console.log(x)
         var name = nave[0].name
         name = name.toUpperCase()
 
@@ -26,10 +21,11 @@ export default function Naves({ naves, setNaveDetalle, setIsDetalle, setIsNaves 
             length: nave[0].length,
             speed: nave[0].max_atmosphering_speed,
             passengers: nave[0].passengers,
+            pilots: nave[0].pilots,
+            films: nave[0].films,
             imgUrl: `https://starwars-visualguide.com/assets/img/starships/${x}.jpg`
         }
         setNaveDetalle(newNave)
-
     }
 
     return (
