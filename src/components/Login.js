@@ -14,7 +14,6 @@ export default function Login({ signList, setUser, user, setUserLoged }) {
             setUser(name)
             setUserLoged(true)
         }
-
     }
 
 

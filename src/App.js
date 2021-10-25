@@ -52,10 +52,12 @@ function App() {
   useEffect(() => {
     JSON.stringify(userLoged)
     localStorage.setItem("userLoged", userLoged)
-    // JSON.stringify(user)
-    // localStorage.setItem("user", user)
 
-  }, [userLoged])
+    ///// USER y SIGN UP DAn ERROR AL CARGAR LOCALSTORAGE
+    JSON.stringify(user)
+    localStorage.setItem("user", user)
+  }, [userLoged, user])
+
   //////////  ***********************
   const logOut = () => {
     setUser(null)

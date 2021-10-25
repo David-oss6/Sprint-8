@@ -7,8 +7,6 @@ export default function SignUp({ setSignList, signList, signModal, setSignModal 
     const [mail, setMail] = useState(null)
     const handleSign = () => {
         var newUser = {};
-
-
         if (name !== null) {
             const n = signList.filter((element) => {
                 return element.name === name
