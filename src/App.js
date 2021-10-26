@@ -24,40 +24,37 @@ function App() {
   const [naves, setNaves] = useState([{}])
   const [naveDetalle, setNaveDetalle] = useState({})
   const [pageCount, setPageCount] = useState(2)
+
   //////  Local STORAGE   ********************
   var list = localStorage.getItem("signList")
   var userLogged = localStorage.getItem("user")
   var isLog = localStorage.getItem("userLoged")
   const [signList, setSignList] = useState(list ? JSON.parse(list) : [{
-    id: 1,
-    name: "David",
-    password: "asd",
-    email: "asd@.com"
+    id: 1, name: "David", password: "asd", email: "asd@.com"
   },
-  {
-    id: 2,
-    name: "asd",
-    password: "asd",
-    email: "asd@.com"
-  }])
+  { id: 2, name: "asd", password: "asd", email: "asd@.com" }])
   const [user, setUser] = useState(userLogged ? JSON.parse(userLogged) : null)
   const [userLoged, setUserLoged] = useState(isLog ? JSON.parse(isLog) : false)
+  //////  Local STORAGE   ********************
+
   const [loginModal, setLoginModal] = useState(false)
   const [signModal, setSignModal] = useState(false)
-
   const [pilots, setPilots] = useState([])
   const [pelis, setPelis] = useState([])
   const [verPilotos, setVerPilotos] = useState(true)
   const [verPelis, setVerPelis] = useState(false)
-  useEffect(() => {
-    JSON.stringify(userLoged)
-    localStorage.setItem("userLoged", userLoged)
 
-    ///// USER y SIGN UP DAn ERROR AL CARGAR LOCALSTORAGE
-    JSON.stringify(user)
-    localStorage.setItem("user", user)
-  }, [userLoged, user])
+  useEffect(async () => {
+    localStorage.setItem("userLoged", JSON.stringify(userLoged))
+    localStorage.setItem("user", JSON.stringify(user))
+    ///// SIGN UP DAn ERROR AL CARGAR LOCALSTORAGE
+    await saveSignList()
 
+  }, [userLoged, user, signList])
+  const saveSignList = async () => {
+    await localStorage.setItem("signList", JSON.stringify(signList))
+
+  }
   //////////  ***********************
   const logOut = () => {
     setUser(null)
