@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Movies from './Movies'
 
-export default function DetailedShip({ verPilotos, setVerPilotos, setVerPelis, setPelis, setPilots, naveDetalle }) {
+export default function DetailedShip({ userLoged, verPilotos, setVerPilotos, setVerPelis, setPelis, setPilots, naveDetalle }) {
     const n = naveDetalle
 
     async function seeMovies(n) {
@@ -29,15 +29,15 @@ export default function DetailedShip({ verPilotos, setVerPilotos, setVerPelis, s
             <MyImg src={n.imgUrl} alt="" />
             <DetDiv>
                 <p style={{ textTransform: "uppercase", color: "white", fontSize: "25px", marginBottom: "10px " }}>{n.name}</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente pariatur dicta vel quod eius tempora cumque ipsum, ad fuga facere minus molestiae, officia temporibus quas sequi voluptate necessitatibus! Laboriosam, quidem?</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.Sapiente pariatur dicta vel quod eius tempora cumque ipsum, ad fuga facere minus molestiae, officia temporibus quas sequi voluptate necessitatibus!Laboriosam, quidem?</p>
                 <div style={{ display: "flex", flexWrap: "nowrap", position: "relative" }}>
                     <div style={{ marginRight: "180px" }} >
                         <MyP>Modelo: </MyP>
                         <MyP>Constructor: </MyP>
-                        <MyP>Coste:</MyP>
+                        <MyP>Coste: </MyP>
                         <MyP>Longitud: </MyP>
-                        <MyP>Vel. max:</MyP>
-                        <MyP>Nº pax:</MyP>
+                        <MyP>Vel.max: </MyP>
+                        <MyP>Nº pax: </MyP>
                     </div>
                     <div >
                         <MyP>{n.model}</MyP>
@@ -50,16 +50,16 @@ export default function DetailedShip({ verPilotos, setVerPilotos, setVerPelis, s
 
                 </div>
                 <div>
-                    <Link to="/ListaPelis" >
+                    <Link to={userLoged ? "/ListaPelis" : "/"}  >
                         <PmBtn onClick={() => seeMovies(n.films)}>See Movies</PmBtn>
                     </Link>
-                    <Link to="/ListaPilots">
+                    <Link to={userLoged ? "/ListaPilots" : "/"} >
                         <PmBtn onClick={() => seePilots(n)}>See Pilots</PmBtn>
                     </Link>
 
                 </div>
-            </DetDiv>
-        </div>
+            </DetDiv >
+        </div >
     )
 }
 

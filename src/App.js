@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Naves from './components/Naves'
 import DetailedShip from "./components/DetailedShip";
 import './style.css'
-import { NavBtn, NavDiv, LoadBtn, LogBtn } from "./components/styled";
+import { NavBtn, NavDiv, LoadBtn, LogBtn, ContDiv, ImgDiv, LogSignDiv, LogOutBtn } from "./components/styled";
 import starwars from './components/img/starwars.jpg'
 import PantallaInicial from './components/PantallaInicial'
 import PilotLis from "./components/PilotLis";
@@ -18,12 +18,16 @@ import GuardedRoute from './components/GuardedRoute'
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Movies from "./components/Movies";
+import Characters from "./components/Characters"
+import DetailedChar from "./components/DetailedChar"
 
 
 function App() {
   const [naves, setNaves] = useState([{}])
   const [naveDetalle, setNaveDetalle] = useState({})
   const [pageCount, setPageCount] = useState(2)
+  const [chars, setChars] = useState([{}])
+  const [personajeDetalle, setPersonajeDetalle] = useState({})
 
   //////  Local STORAGE   ********************
   var list = localStorage.getItem("signList")
@@ -47,14 +51,8 @@ function App() {
   useEffect(async () => {
     localStorage.setItem("userLoged", JSON.stringify(userLoged))
     localStorage.setItem("user", JSON.stringify(user))
-    ///// SIGN UP DAn ERROR AL CARGAR LOCALSTORAGE
-    await saveSignList()
+  }, [userLoged, user])
 
-  }, [userLoged, user, signList])
-  const saveSignList = async () => {
-    await localStorage.setItem("signList", JSON.stringify(signList))
-
-  }
   //////////  ***********************
   const logOut = () => {
     setUser(null)
@@ -68,6 +66,10 @@ function App() {
     axios.get(`https://swapi.dev/api/starships/`)
       .then((res) => {
         setNaves(res.data.results)
+      })
+    axios.get(`https://swapi.dev/api/people/`)
+      .then((res) => {
+        setChars(res.data.results)
       })
   }, [])
 
@@ -87,16 +89,18 @@ function App() {
   return (
     <Router>
       <div >
-        <div>
-          <img className="starImg" src={starwars} alt="" />
-          <div >
-
-            {/* ///////////// LOGGIN ********************* */}
+        <ContDiv>
+          <div style={{ width: "180px" }}>
+          </div>
+          <ImgDiv>
+            <img className="starImg" src={starwars} alt="" />
+          </ImgDiv>
+          <LogSignDiv >
             {userLoged ?
               <div>
                 {user}
                 <br />
-                <button onClick={() => logOut()}>LogOut</button>
+                <LogOutBtn className={"pointer"} onClick={() => logOut()}>LogOut</LogOutBtn>
               </div>
               :
               <div> <LogBtn onClick={() => setLoginModal(!loginModal)}  >LOG IN</LogBtn>
@@ -111,19 +115,24 @@ function App() {
 
                 {/* //////////////////   SIGN UP ******************** */}
                 {signModal && <SignUp
+                  setLoginModal={setLoginModal}
+                  loginModal={loginModal}
                   signModal={signModal}
                   setSignModal={setSignModal}
                   signList={signList}
                   setSignList={setSignList} />}
               </div>}
-          </div>
-        </div>
+          </LogSignDiv>
+        </ContDiv>
         <NavDiv>
           <Link to="/">
             <NavBtn >HOME</NavBtn>
           </Link>
           <Link to={userLoged ? "/starships" : "/"}>
             <NavBtn >STARSHIPS</NavBtn>
+          </Link>
+          <Link to={userLoged ? "/characters" : "/"}>
+            <NavBtn >CHARACTERS</NavBtn>
           </Link>
 
         </NavDiv>
@@ -144,20 +153,22 @@ function App() {
 
           <Route path="/detalle">
 
-            <DetailedShip PilotLis={PilotLis} pelis={pelis} setPelis={setPelis} verPilotos={verPilotos} setVerPelis={setVerPelis} setVerPilotos={setVerPilotos} pilots={pilots} setPilots={setPilots} naveDetalle={naveDetalle} />
+            <DetailedShip userLoged={userLoged} PilotLis={PilotLis} pelis={pelis} setPelis={setPelis} verPilotos={verPilotos} setVerPelis={setVerPelis} setVerPilotos={setVerPilotos} pilots={pilots} setPilots={setPilots} naveDetalle={naveDetalle} />
+          </Route>
+          <Route path="/characters">
+            <Characters setPersonajeDetalle={setPersonajeDetalle} chars={chars} />
+          </Route>
+          <Route path="/detailedChar">
+            <DetailedChar />
           </Route>
 
           <Route path="/ListaPilots">
-            <PilotLis pilots={pilots} />
+            <PilotLis naveDetalle={naveDetalle} pilots={pilots} />
           </Route>
           <Route path="/ListaPelis">
-            <Movies verPelis={verPelis} pelis={pelis} />
+            <Movies naveDetalle={naveDetalle} verPelis={verPelis} pelis={pelis} />
           </Route>
-
         </Switch>
-
-
-
       </div>
     </Router>
   );

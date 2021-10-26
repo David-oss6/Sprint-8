@@ -1,10 +1,10 @@
 
 import { DetDiv, MyP } from './styled'
-export default function Movies({ pelis, verPelis }) {
+export default function Movies({ naveDetalle, pelis, verPelis }) {
 
     return (
         <div style={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
-            <h1>Movies List</h1>
+            <h1>  {naveDetalle.name} Movies</h1>
             {verPelis && pelis.map((el) => {
                 console.log(el)
                 return <DetDiv>

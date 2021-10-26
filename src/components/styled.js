@@ -17,13 +17,41 @@ export const NavDiv = styled.div`
   `
 export const LogBtn = styled.button`
         padding: 15px;
-        font-size: 20px;
+        font-size: 15px;
         background-color: black;
         box-shadow: none;
         border-style: none;
         color: white;
 `
+////////// APP IMG Login SIgnUP btns   ***************
+export const ContDiv = styled.div`
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+        padding: 0 50px 0 50px;
+        flex-shrink: 3;
+   
+  `
+export const ImgDiv = styled.div`
+ `
+export const LogSignDiv = styled.div`
+    width: 180px;
+`
 
+export const LogOutBtn = styled.div`
+cursor: "pointer";
+    text-shadow:
+    0 0 7px #f18686,
+    0 0 10px #f07f7f,
+    0 0 21px #f56262,
+    0 0 42px #f12e5f,
+    0 0 82px #f12e5f,
+    0 0 92px #f12e5f,
+    0 0 102px #f12e5f,
+    0 0 151px #f12e5f;
+
+`
 ////////////// Lista Naves *************************
 export const NavesBtn = styled.button`
 background-color: #161616;

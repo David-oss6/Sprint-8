@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { DetDiv, MyP } from './styled'
 
-export default function PilotLis({ pilots }) {
+export default function PilotLis({ naveDetalle, pilots }) {
     const [list, setList] = useState([{}])
 
     useEffect(async () => {
@@ -19,7 +19,7 @@ export default function PilotLis({ pilots }) {
 
     return (
         <div style={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
-            <h1>Pilot List</h1>
+            <h1>{naveDetalle.name} Pilots</h1>
             {list.map((e) => {
                 return (
                     <DetDiv>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../style.css'
 
-export default function SignUp({ setSignList, signList, signModal, setSignModal }) {
+export default function SignUp({ setLoginModal, loginModal, setSignList, signList, signModal, setSignModal }) {
     const [name, setName] = useState(null)
     const [pass, setPass] = useState(null)
     const [mail, setMail] = useState(null)
@@ -11,7 +11,7 @@ export default function SignUp({ setSignList, signList, signModal, setSignModal 
             const n = signList.filter((element) => {
                 return element.name === name
             })
-            console.log(n)
+
             if (n.length === 0) {
                 if (pass != null && pass.length > 0) {
                     newUser = {
@@ -24,12 +24,13 @@ export default function SignUp({ setSignList, signList, signModal, setSignModal 
                     setPass(null)
                     setName(null)
                     setMail(null)
-                    JSON.stringify(signList)
-                    localStorage.setItem("signList", signList)
+                    localStorage.setItem("signList", JSON.stringify(signList))
+                    setSignModal(!signModal)
+                    setLoginModal(!loginModal)
                 } else alert("Contraseña al menos dos char")
             } else alert("El nombre ya existe")
         } else alert("Nombre incorrecto")
-        console.log(signList)
+
     }
 
     return (

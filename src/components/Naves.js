@@ -11,7 +11,7 @@ export default function Naves({ naves, setNaveDetalle }) {
         })
         var x = nave[0].url.replace(/[^0-9]/g, '')
         var name = nave[0].name
-        name = name.toUpperCase()
+        // name = name.toUpperCase()
 
         const newNave = {
             name: name,
