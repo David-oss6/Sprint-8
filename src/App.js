@@ -12,7 +12,6 @@ import {
   Switch,
   Route,
   Link,
-  Redirect
 } from "react-router-dom";
 import GuardedRoute from './components/GuardedRoute'
 import Login from "./components/Login";
@@ -30,9 +29,9 @@ function App() {
   const [personajeDetalle, setPersonajeDetalle] = useState({})
 
   //////  Local STORAGE   ********************
-  var list = localStorage.getItem("signList")
-  var userLogged = localStorage.getItem("user")
-  var isLog = localStorage.getItem("userLoged")
+  const list = localStorage.getItem("signList")
+  const userLogged = localStorage.getItem("user")
+  const isLog = localStorage.getItem("userLoged")
   const [signList, setSignList] = useState(list ? JSON.parse(list) : [{
     id: 1, name: "David", password: "asd", email: "asd@.com"
   },
@@ -73,9 +72,21 @@ function App() {
       })
   }, [])
 
+  const [charPageCount, setCharPageCount] = useState(2)
+  const loadMoreChar = async () => {
+    console.log("click")
+    setCharPageCount(charPageCount + 1)
+    try {
+      const resPost = await axios.get(`https://swapi.dev/api/people/?page=${pageCount}`)
+      const res = await resPost.data.results;
+      setNaves([...chars, ...res])
+    } catch (error) {
+      console.log("No funciona")
+    }
+  }
+
   const loadMore = async () => {
     setPageCount(pageCount + 1)
-
     try {
       const resPost = await axios.get(`https://swapi.dev/api/starships/?page=${pageCount}`)
       const res = await resPost.data.results;
@@ -83,7 +94,6 @@ function App() {
     } catch (error) {
       console.log("No funciona")
     }
-
   }
 
   return (
@@ -157,9 +167,10 @@ function App() {
           </Route>
           <Route path="/characters">
             <Characters setPersonajeDetalle={setPersonajeDetalle} chars={chars} />
+            <LoadBtn onClick={() => loadMoreChar()}>Load More</LoadBtn>
           </Route>
           <Route path="/detailedChar">
-            <DetailedChar />
+            <DetailedChar personajeDetalle={personajeDetalle} />
           </Route>
 
           <Route path="/ListaPilots">

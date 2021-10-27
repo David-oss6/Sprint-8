@@ -5,13 +5,17 @@ export default function SignUp({ setLoginModal, loginModal, setSignList, signLis
     const [name, setName] = useState(null)
     const [pass, setPass] = useState(null)
     const [mail, setMail] = useState(null)
-    const handleSign = () => {
+
+    const saveLocal = (signList) => {
+        localStorage.setItem("signList", JSON.stringify(signList))
+        console.log(signList)
+    }
+    const handleSign = async () => {
         var newUser = {};
         if (name !== null) {
             const n = signList.filter((element) => {
                 return element.name === name
             })
-
             if (n.length === 0) {
                 if (pass != null && pass.length > 0) {
                     newUser = {
@@ -24,13 +28,12 @@ export default function SignUp({ setLoginModal, loginModal, setSignList, signLis
                     setPass(null)
                     setName(null)
                     setMail(null)
-                    localStorage.setItem("signList", JSON.stringify(signList))
                     setSignModal(!signModal)
                     setLoginModal(!loginModal)
                 } else alert("Contraseña al menos dos char")
             } else alert("El nombre ya existe")
         } else alert("Nombre incorrecto")
-
+        await saveLocal(signList)
     }
 
     return (

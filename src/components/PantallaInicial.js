@@ -12,7 +12,7 @@ export default function PantallaInicial() {
                     url={intro}
                     width="100%"
                     controls
-                    playing={false}
+                    playing={true}
                     volume='0.1'
                 />
             </DetDiv>

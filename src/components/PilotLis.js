@@ -22,7 +22,7 @@ export default function PilotLis({ naveDetalle, pilots }) {
             <h1>{naveDetalle.name} Pilots</h1>
             {list.map((e) => {
                 return (
-                    <DetDiv>
+                    <DetDiv style={{ borderBottom: "#f07272 1px solid" }}>
                         <MyP style={{ textTransform: "uppercase", fontSize: "25px", marginBottom: "10px ", color: "white" }}>{e.name}</MyP>
                         <MyP style={{ marginLeft: "50px" }}>Height: {e.height}</MyP>
                         <MyP style={{ marginLeft: "50px" }}>Mass: {e.mass}</MyP>
@@ -31,7 +31,7 @@ export default function PilotLis({ naveDetalle, pilots }) {
                         <MyP style={{ marginLeft: "50px" }}>Eye color: {e.eye_color}</MyP>
                         <MyP style={{ marginLeft: "50px" }}>Date of birth: {e.birth_year}</MyP>
                         <MyP style={{ marginLeft: "50px" }}>Gender: {e.gender}</MyP>
-                        <hr />
+
                     </DetDiv>
                 )
             })}

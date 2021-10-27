@@ -7,11 +7,10 @@ export default function Movies({ naveDetalle, pelis, verPelis }) {
             <h1>  {naveDetalle.name} Movies</h1>
             {verPelis && pelis.map((el) => {
                 console.log(el)
-                return <DetDiv>
+                return <DetDiv style={{ borderBottom: "#f07272 1px solid" }}>
                     <p style={{ textTransform: "uppercase", fontSize: "25px", marginBottom: "10px ", color: "white" }}>{el.title}</p>
                     <MyP>{el.opening_crawl}</MyP>
                     <MyP>Director: {el.director}</MyP>
-                    <hr />
                 </DetDiv>
             })}
         </div>
