@@ -6,16 +6,16 @@ export default function DetailedChar({ personajeDetalle }) {
     const [PelisList, setPelisList] = useState([])
     const [NavesList, setNavesList] = useState([])
     const x = personajeDetalle
-    console.log(x)
+
 
 
     useEffect(async () => {
-        console.log(personajeDetalle.starships)
+
         const naves = await Promise.all(personajeDetalle.starships.map(async (el) => {
             const d = await axios.get(el.url)
             const r = d.data
             var x = r.url.replace(/[^0-9]/g, '')
-            const newNave = await {
+            const newNave = {
                 name: r.name,
                 model: r.model,
                 class: r.starship_class,
