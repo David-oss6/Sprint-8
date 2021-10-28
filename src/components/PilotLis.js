@@ -13,7 +13,6 @@ export default function PilotLis({ naveDetalle, pilots }) {
             return r;
         }))
         setList(d)
-        console.log('dddddddddd', d);
     }, [pilots])
 
 
