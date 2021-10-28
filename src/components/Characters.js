@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom'
 import { NavesBtn } from './styled'
 
 export default function Characters({ setPersonajeDetalle, chars }) {
-
-
-
     async function getVehicles(x) {
         var nav = "";
         const d = await Promise.all(x.vehicles.map(async (el) => {
@@ -32,7 +29,6 @@ export default function Characters({ setPersonajeDetalle, chars }) {
             return r;
         }))
         return nav
-
     }
 
     async function getPelis(x) {
@@ -48,7 +44,6 @@ export default function Characters({ setPersonajeDetalle, chars }) {
             pelis.push(newPeli);
             return r;
         }))
-
         return pelis
     }
 

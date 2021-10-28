@@ -10,8 +10,8 @@ export default function DetailedChar({ personajeDetalle }) {
     useEffect(async () => {
         const pelis = await Promise.all(x.films.map(async (el) => {
             const d = await axios.get(el.url)
-            const r = d.data
-            const newPeli = {
+            const r = await d.data
+            const newPeli = await {
                 title: r.title,
                 crawl: r.opening_crawl,
                 director: r.director
@@ -22,9 +22,9 @@ export default function DetailedChar({ personajeDetalle }) {
 
         const naves = await Promise.all(x.starships.map(async (el) => {
             const d = await axios.get(el.url)
-            const r = d.data
+            const r = await d.data
             var x = await r.url.replace(/[^0-9]/g, '')
-            const newNave = {
+            const newNave = await {
                 name: r.name,
                 model: r.model,
                 class: r.starship_class,
@@ -74,7 +74,7 @@ export default function DetailedChar({ personajeDetalle }) {
                             <MyP>Class: {el.class}</MyP>
                         </div>
                         <div style={{ height: "100px", justifyContent: "space-between" }}>
-                            <img src={el.img} alt="Bang" style={{ height: "100px" }} />
+                            <img src={el.img} alt="Starship" style={{ height: "100px" }} />
                         </div>
                     </div>
                 })}

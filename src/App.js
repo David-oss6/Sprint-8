@@ -155,7 +155,7 @@ function App() {
             setNaves={setNaves} naves={naves} setNaveDetalle={setNaveDetalle}
           /> */}
           {userLoged &&
-            <Route exact path="/starships" >
+            <Route path="/starships" >
               <Naves setNaves={setNaves} naves={naves} setNaveDetalle={setNaveDetalle} />
               <LoadBtn onClick={() => loadMore()}>Load more</LoadBtn>
             </Route>
