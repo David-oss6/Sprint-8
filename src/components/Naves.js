@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { NavesBtn } from './styled.js'
 import { Link } from "react-router-dom";
 
@@ -10,11 +9,11 @@ export default function Naves({ naves, setNaveDetalle }) {
             return element.name === name;
         })
         var x = nave[0].url.replace(/[^0-9]/g, '')
-        var name = nave[0].name
+        var nombre = nave[0].name
         // name = name.toUpperCase()
 
         const newNave = {
-            name: name,
+            name: nombre,
             model: nave[0].model,
             cost: nave[0].cost_in_credits,
             manufacturer: nave[0].manufacturer,

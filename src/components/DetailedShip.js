@@ -1,9 +1,9 @@
 
-import React, { useState } from 'react'
+import React from 'react'
 import { DetDiv, MyImg, MyP, PmBtn } from './styled'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import Movies from './Movies'
+
 
 export default function DetailedShip({ userLoged, verPilotos, setVerPilotos, setVerPelis, setPelis, setPilots, naveDetalle }) {
     const n = naveDetalle

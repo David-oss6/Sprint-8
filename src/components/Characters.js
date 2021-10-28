@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { NavesBtn } from './styled'
 
 export default function Characters({ setPersonajeDetalle, chars }) {
+    const [char, setChar] = useState()
     async function getVehicles(x) {
         var nav = "";
         const d = await Promise.all(x.vehicles.map(async (el) => {
@@ -57,6 +58,7 @@ export default function Characters({ setPersonajeDetalle, chars }) {
         const starships = await getStarships(x)
         const vehicles = await getVehicles(x)
         const films = await getPelis(x)
+        const results = Promise.all([homeworld, starships, vehicles, films]).then(values => console.log(values))
 
         const newChar = {
             name: x.name,
