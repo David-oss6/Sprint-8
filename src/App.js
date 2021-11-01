@@ -19,14 +19,18 @@ import SignUp from "./components/SignUp";
 import Movies from "./components/Movies";
 import Characters from "./components/Characters"
 import DetailedChar from "./components/DetailedChar"
-
+import StaticContext from "./context/StaticContext";
 
 function App() {
+  // Axios list   **********
   const [naves, setNaves] = useState([{}])
-  const [naveDetalle, setNaveDetalle] = useState({})
-  const [pageCount, setPageCount] = useState(2)
+  const [peliculas, setPeliculas] = useState([])
   const [chars, setChars] = useState([{}])
   const [personajeDetalle, setPersonajeDetalle] = useState({})
+  const [naveDetalle, setNaveDetalle] = useState({})
+  const [pageCount, setPageCount] = useState(2)
+  const [charPageCount, setCharPageCount] = useState(2)
+  // Axios list   **********
 
   //////  Local STORAGE   ********************
   const list = localStorage.getItem("signList")
@@ -44,8 +48,14 @@ function App() {
   const [signModal, setSignModal] = useState(false)
   const [pilots, setPilots] = useState([])
   const [pelis, setPelis] = useState([])
+
   const [verPilotos, setVerPilotos] = useState(true)
   const [verPelis, setVerPelis] = useState(false)
+
+  //Static Context variable*****
+  const [personaje, setPersonaje] = useState()
+  const value = { personaje, setPersonaje }
+  const [seeChars, setSeeChars] = useState(true)
 
   useEffect(async () => {
     localStorage.setItem("userLoged", JSON.stringify(userLoged))
@@ -70,16 +80,20 @@ function App() {
       .then((res) => {
         setChars(res.data.results)
       })
+    axios.get(`https://swapi.dev/api/films/`)
+      .then((res) => {
+        setPeliculas(res.data.results)
+      })
   }, [])
 
-  const [charPageCount, setCharPageCount] = useState(2)
+
   const loadMoreChar = async () => {
-    console.log("click")
+    console.log(charPageCount)
     setCharPageCount(charPageCount + 1)
     try {
-      const resPost = await axios.get(`https://swapi.dev/api/people/?page=${pageCount}`)
+      const resPost = await axios.get(`https://swapi.dev/api/people/?page=${charPageCount}`)
       const res = await resPost.data.results;
-      setNaves([...chars, ...res])
+      setChars([...chars, ...res])
     } catch (error) {
       console.log("No funciona")
     }
@@ -97,91 +111,100 @@ function App() {
   }
 
   return (
-    <Router>
-      <div >
-        <ContDiv>
-          <div style={{ width: "180px" }}>
-          </div>
-          <ImgDiv>
-            <img className="starImg" src={starwars} alt="" />
-          </ImgDiv>
-          <LogSignDiv >
-            {userLoged ?
-              <div>
-                {user}
-                <br />
-                <LogOutBtn className={"pointer"} onClick={() => logOut()}>LogOut</LogOutBtn>
-              </div>
-              :
-              <div> <LogBtn onClick={() => setLoginModal(!loginModal)}  >LOG IN</LogBtn>
-                <LogBtn onClick={() => setSignModal(!signModal)}>SIGN UP</LogBtn>
-                {loginModal && <Login
-                  setUser={setUser}
-                  setUserLoged={setUserLoged}
-                  user={user}
-                  signList={signList}
-                  loginModal={loginModal}
-                  setLoginModal={setLoginModal} />}
+    <StaticContext.Provider value={personajeDetalle}>
+      <Router>
+        <div >
+          <ContDiv>
+            <div style={{ width: "180px" }}>
+            </div>
+            <ImgDiv>
+              <img className="starImg" src={starwars} alt="" />
+            </ImgDiv>
+            <LogSignDiv >
+              {userLoged ?
+                <div>
+                  {user}
+                  <br />
+                  <LogOutBtn className={"pointer"} onClick={() => logOut()}>LogOut</LogOutBtn>
+                </div>
+                :
+                <div> <LogBtn onClick={() => setLoginModal(!loginModal)}  >LOG IN</LogBtn>
+                  <LogBtn onClick={() => setSignModal(!signModal)}>SIGN UP</LogBtn>
+                  {loginModal && <Login
+                    setUser={setUser}
+                    setUserLoged={setUserLoged}
+                    user={user}
+                    signList={signList}
+                    loginModal={loginModal}
+                    setLoginModal={setLoginModal} />}
 
-                {/* //////////////////   SIGN UP ******************** */}
-                {signModal && <SignUp
-                  setLoginModal={setLoginModal}
-                  loginModal={loginModal}
-                  signModal={signModal}
-                  setSignModal={setSignModal}
-                  signList={signList}
-                  setSignList={setSignList} />}
-              </div>}
-          </LogSignDiv>
-        </ContDiv>
-        <NavDiv>
-          <Link to="/">
-            <NavBtn >HOME</NavBtn>
-          </Link>
-          <Link to={userLoged ? "/starships" : "/"}>
-            <NavBtn >STARSHIPS</NavBtn>
-          </Link>
-          <Link to={userLoged ? "/characters" : "/"}>
-            <NavBtn >CHARACTERS</NavBtn>
-          </Link>
+                  {/* //////////////////   SIGN UP ******************** */}
+                  {signModal && <SignUp
+                    setLoginModal={setLoginModal}
+                    loginModal={loginModal}
+                    signModal={signModal}
+                    setSignModal={setSignModal}
+                    signList={signList}
+                    setSignList={setSignList} />}
+                </div>}
+            </LogSignDiv>
+          </ContDiv>
+          <NavDiv>
+            <Link to="/">
+              <NavBtn onClick={() => setSeeChars(true)} >HOME</NavBtn>
+            </Link>
+            <Link to={userLoged ? "/starships" : "/"}>
+              <NavBtn onClick={() => setSeeChars(true)} >STARSHIPS</NavBtn>
+            </Link>
+            <Link to={userLoged ? "/characters" : "/"}>
+              <NavBtn onClick={() => setSeeChars(true)} >CHARACTERS</NavBtn>
+            </Link>
 
-        </NavDiv>
-        <Switch>
-          <Route exact path="/">
-            <PantallaInicial />
-          </Route>
+          </NavDiv>
+          <Switch>
+            <Route exact path="/">
+              <PantallaInicial />
+            </Route>
 
-          {/* <GuardedRoute path="/starships" component={Naves} auth={userLoged}
+            {/* <GuardedRoute path="/starships" component={Naves} auth={userLoged}
             setNaves={setNaves} naves={naves} setNaveDetalle={setNaveDetalle}
           /> */}
-          {userLoged &&
-            <Route path="/starships" >
-              <Naves setNaves={setNaves} naves={naves} setNaveDetalle={setNaveDetalle} />
-              <LoadBtn onClick={() => loadMore()}>Load more</LoadBtn>
+            {userLoged &&
+              <Route path="/starships" >
+                <Naves setNaves={setNaves} naves={naves} setNaveDetalle={setNaveDetalle} />
+                <LoadBtn onClick={() => loadMore()}>Load more</LoadBtn>
+              </Route>
+            }
+            <Route path="/detalle">
+              <DetailedShip userLoged={userLoged} PilotLis={PilotLis} pelis={pelis} setPelis={setPelis} verPilotos={verPilotos} setVerPelis={setVerPelis} setVerPilotos={setVerPilotos} pilots={pilots} setPilots={setPilots} naveDetalle={naveDetalle} />
             </Route>
-          }
 
-          <Route path="/detalle">
+            {/*////////////         PEROSNAJES  ******************/}
+            <Route path="/characters">
+              {seeChars ? <> <Characters
+                seeChars={seeChars}
+                setSeeChars={setSeeChars}
+                setPersonajeDetalle={setPersonajeDetalle}
+                chars={chars} />
+                <LoadBtn onClick={() => loadMoreChar()}>Load More</LoadBtn> </>
+                :
+                <DetailedChar
+                  seeChars={seeChars}
+                  setSeeChars={setSeeChars}
+                  personajeDetalle={personajeDetalle} />}
+            </Route>
+            {/*////////////         PEROSNAJES  ******************/}
 
-            <DetailedShip userLoged={userLoged} PilotLis={PilotLis} pelis={pelis} setPelis={setPelis} verPilotos={verPilotos} setVerPelis={setVerPelis} setVerPilotos={setVerPilotos} pilots={pilots} setPilots={setPilots} naveDetalle={naveDetalle} />
-          </Route>
-          <Route path="/characters">
-            <Characters setPersonajeDetalle={setPersonajeDetalle} chars={chars} />
-            <LoadBtn onClick={() => loadMoreChar()}>Load More</LoadBtn>
-          </Route>
-          <Route path="/detailedChar">
-            <DetailedChar personajeDetalle={personajeDetalle} />
-          </Route>
-
-          <Route path="/ListaPilots">
-            <PilotLis naveDetalle={naveDetalle} pilots={pilots} />
-          </Route>
-          <Route path="/ListaPelis">
-            <Movies naveDetalle={naveDetalle} verPelis={verPelis} pelis={pelis} />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+            <Route path="/ListaPilots">
+              <PilotLis naveDetalle={naveDetalle} pilots={pilots} />
+            </Route>
+            <Route path="/ListaPelis">
+              <Movies naveDetalle={naveDetalle} verPelis={verPelis} pelis={pelis} />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </StaticContext.Provider>
   );
 }
 
