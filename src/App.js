@@ -86,7 +86,6 @@ function App() {
       })
   }, [])
 
-
   const loadMoreChar = async () => {
     console.log(charPageCount)
     setCharPageCount(charPageCount + 1)

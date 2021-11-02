@@ -101,3 +101,12 @@ export const PmBtn = styled.button`
    margin: 15px 148px 0 0 ;
    color: white;
 `
+
+export const Myimg = styled.img`
+height: 200px;
+`
+export const MyImgDiv = styled.div`
+    margin-right: 150px;
+    align-self : center ;
+    justify-self: flex-end;
+`
