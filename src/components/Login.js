@@ -16,7 +16,6 @@ export default function Login({ signList, setUser, user, setUserLoged }) {
         }
     }
 
-
     return (
         <div>
             <input

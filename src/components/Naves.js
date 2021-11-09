@@ -1,8 +1,24 @@
-import React from 'react'
-import { NavesBtn } from './styled.js'
+import React, { useState, useContext } from 'react'
+import { LoadBtn, NavesBtn } from './styled.js'
 import { Link } from "react-router-dom";
+import { ContextData } from '../aplication/ContextData.js';
+import axios from 'axios';
 
-export default function Naves({ naves, setNaveDetalle }) {
+export default function Naves() {
+    const { naves, setNaves } = useContext(ContextData)
+    const { setNaveDetalle } = useContext(ContextData)
+    const [pageCount, setPageCount] = useState(2)
+
+    const loadMore = async () => {
+        setPageCount(pageCount + 1)
+        try {
+            const resPost = await axios.get(`https://swapi.dev/api/starships/?page=${pageCount}`)
+            const res = await resPost.data.results;
+            setNaves([...naves, ...res])
+        } catch (error) {
+            console.log("No funciona")
+        }
+    }
 
     const detalleNave = (name) => {
         const nave = naves.filter(element => {
@@ -29,7 +45,7 @@ export default function Naves({ naves, setNaveDetalle }) {
 
     return (
         <div>
-            {naves.map((element) => {
+            {naves && naves.map((element) => {
                 return (
                     <div style={{ decoration: "none" }} >
                         <Link to="/detalle">
@@ -41,6 +57,7 @@ export default function Naves({ naves, setNaveDetalle }) {
                     </div>
                 )
             })}
+            <LoadBtn onClick={() => loadMore()}>Load more</LoadBtn>
         </div>
     )
 }
