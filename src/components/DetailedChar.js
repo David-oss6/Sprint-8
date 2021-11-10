@@ -8,6 +8,7 @@ export default function DetailedChar() {
     const [x, setX] = useState(null)
     useEffect(async () => {
         var x = personajeDetalle
+        console.log(x)
 
         async function getVehicles(x) {
             var nav = "";
@@ -79,27 +80,16 @@ export default function DetailedChar() {
             return pelis
         }
 
-        const homeworld = await axios.get(x.homeworld).then(res => res.data.name)
-        const starships = await getStarships(x)
-        const vehicles = await getVehicles(x)
-        const films = await getPelis(x)
-        console.log(homeworld, starships, vehicles, films)
+        x.homeworld = await axios.get(x.homeworld).then(res => res.data.name)
+        x.starships = await getStarships(x)
+        x.vehicles = await getVehicles(x)
+        x.films = await getPelis(x)
+        console.log(x.homeworld, x.starships, x.vehicles, x.films)
         // const results = Promise.all([homeworld, starships, vehicles, films]).then(values => console.log(values))
         var imgNum = x.url.replace(/[^0-9]/g, '')
-        const newChar = {
-            name: x.name,
-            birth: x.birth_year,
-            gender: x.gender,
-            height: x.height,
-            mass: x.mass,
-            homeworld: homeworld,
-            starships: starships,
-            vehicles: vehicles,
-            films: films,
-            img: ` https://starwars-visualguide.com/assets/img/characters/${imgNum}.jpg`
-        }
-        setX(newChar)
-        x = personajeDetalle
+        x.url = ` https://starwars-visualguide.com/assets/img/characters/${imgNum}.jpg`
+        setX(x)
+
     }, [personajeDetalle])
 
 
@@ -109,14 +99,14 @@ export default function DetailedChar() {
 
         <div style={{ display: "flex", justifyContent: "center" }}>
 
-            {x &&
+            {x && <div>
                 <DetDiv style={{ borderBottom: "#f07272 1px solid" }} >
                     <p style={{ textTransform: "uppercase", color: "white", fontSize: "25px", marginBottom: "10px " }}>
                         {x.name}
                     </p>
                     <div style={{ display: "flex", backgroundColor: "#161616", padding: "20px 10px", flexFlow: "row nowrap space-between" }}>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.Sapiente pariatur dicta vel quod eius tempora cumque ipsum, ad fuga facere minus molestiae, officia temporibus quas sequi voluptate necessitatibus!Laboriosam, quidem?</p>
-                        <img src={x.img} alt="" style={{ height: "150px", margin: "0px 50px 0 50px" }} />
+                        <img src={x.url} alt="" style={{ height: "150px", margin: "0px 50px 0 50px" }} />
                     </div>
                     <div style={{ backgroundColor: "#161616", marginBottom: "15px ", borderBottom: "#f07272 1px solid", display: "flex", flexWrap: "nowrap", position: "relative" }}>
                         <div style={{ marginRight: "180px" }} >
@@ -128,7 +118,7 @@ export default function DetailedChar() {
                             <MyP>Vehicles: </MyP>
                         </div>
                         <div >
-                            <MyP>{x.birth}</MyP>
+                            <MyP>{x.birth_year}</MyP>
                             <MyP>{x.gender}</MyP>
                             <MyP>{x.height} cm</MyP>
                             <MyP>{x.mass} kg</MyP>
@@ -136,31 +126,33 @@ export default function DetailedChar() {
                             <MyP>{x.vehicles}</MyP>
                         </div>
                     </div >
+
+
+                    <p>Starships: </p>
+                    {x && x.starships.map((el) => {
+                        return <div style={{ backgroundColor: "#161616", marginBottom: "15px ", display: "flex", flexWrap: "nowrap", alignItems: "center", }}>
+                            <div style={{ width: "300px", marginRight: "310px" }} >
+                                <h2>{el.name}</h2>
+                                <MyP>Model: {el.model}</MyP>
+                                <MyP>Class: {el.class}</MyP>
+                            </div>
+                            <div style={{ height: "100px", justifyContent: "space-between" }}>
+                                <img src={el.img} alt="Starship" style={{ height: "100px" }} />
+                            </div>
+                        </div>
+                    })
+                    }
+                    <div style={{ borderBottom: "#f07272 1px solid" }}></div>
+                    <p>Films: </p>
+                    {x && x.films.map((el) => {
+                        return <div style={{ backgroundColor: "#161616", marginBottom: "15px " }}>
+                            <h2>{el.title}</h2>
+                            <p>{el.crawl}</p>
+                            <p>{el.director}</p>
+                        </div>
+                    })}
                 </DetDiv >
-            }
-            <p>Starships: </p>
-            {x && x.starships.map((el) => {
-                return <div style={{ backgroundColor: "#161616", marginBottom: "15px ", display: "flex", flexWrap: "nowrap", alignItems: "center", }}>
-                    <div style={{ width: "300px", marginRight: "310px" }} >
-                        <h2>{el.name}</h2>
-                        <MyP>Model: {el.model}</MyP>
-                        <MyP>Class: {el.class}</MyP>
-                    </div>
-                    <div style={{ height: "100px", justifyContent: "space-between" }}>
-                        <img src={el.img} alt="Starship" style={{ height: "100px" }} />
-                    </div>
-                </div>
-            })
-            }
-            <div style={{ borderBottom: "#f07272 1px solid" }}></div>
-            <p>Films: </p>
-            {x && x.films.map((el) => {
-                return <div style={{ backgroundColor: "#161616", marginBottom: "15px " }}>
-                    <h2>{el.title}</h2>
-                    <p>{el.crawl}</p>
-                    <p>{el.director}</p>
-                </div>
-            })}
+            </div>}
         </div >
     )
 }

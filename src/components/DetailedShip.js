@@ -36,7 +36,7 @@ export default function DetailedShip() {
             <DetDiv>
                 <p style={{ textTransform: "uppercase", color: "white", fontSize: "25px", marginBottom: "10px " }}>{n.name}</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.Sapiente pariatur dicta vel quod eius tempora cumque ipsum, ad fuga facere minus molestiae, officia temporibus quas sequi voluptate necessitatibus!Laboriosam, quidem?</p>
-                <div style={{ display: "flex", flexWrap: "nowrap", position: "relative" }}>
+                <div style={{ backgroundColor: "#161616", display: "flex", flexWrap: "nowrap", position: "relative" }}>
                     <div style={{ marginRight: "180px" }} >
                         <MyP>Modelo: </MyP>
                         <MyP>Constructor: </MyP>
@@ -58,11 +58,11 @@ export default function DetailedShip() {
                     <p>Films: </p>
                     {
                         list && list.map((el) => {
-                            return <DetDiv style={{ borderBottom: "#f07272 1px solid" }}>
+                            return <div style={{ backgroundColor: "#161616", borderBottom: "#f07272 1px solid" }}>
                                 <p style={{ textTransform: "uppercase", fontSize: "25px", marginBottom: "10px ", color: "white" }}>{el.title}</p>
                                 <MyP>{el.opening_crawl}</MyP>
                                 <MyP>Director: {el.director}</MyP>
-                            </DetDiv>
+                            </div>
                         })
                     }
                 </div>
@@ -71,7 +71,7 @@ export default function DetailedShip() {
                     {
                         pilotos && pilotos.map((e) => {
                             return (
-                                <DetDiv style={{ backgroundColor: "#161616", display: "flex", flexFlow: "row nowrap", borderBottom: "#f07272 1px solid", justifyContent: "space-between" }}>
+                                <div style={{ backgroundColor: "#161616", display: "flex", flexFlow: "row nowrap", borderBottom: "#f07272 1px solid", justifyContent: "space-between" }}>
                                     <div>
                                         <MyP style={{ textTransform: "uppercase", fontSize: "25px", marginBottom: "10px ", color: "white" }}>{e.name}</MyP>
                                         <MyP style={{ marginLeft: "50px" }}>Height: {e.height}</MyP>
@@ -85,7 +85,7 @@ export default function DetailedShip() {
                                     <MyImgDiv>
                                         <Myimg src={e.url} alt="" />
                                     </MyImgDiv>
-                                </DetDiv>
+                                </div>
                             )
                         })
                     }

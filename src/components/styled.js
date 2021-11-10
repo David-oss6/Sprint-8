@@ -25,6 +25,7 @@ export const LogBtn = styled.button`
 `
 ////////// APP IMG Login SIgnUP btns   ***************
 export const ContDiv = styled.div`
+border-color: black;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;

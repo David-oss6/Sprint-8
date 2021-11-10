@@ -1,7 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import '../style.css'
+import { ContextData } from '../aplication/ContextData'
 
-export default function Login({ signList, setUser, user, setUserLoged }) {
+export default function Login() {
+    const { setUserLoged } = useContext(ContextData)
+    const { signList } = useContext(ContextData)
+    const { setUser } = useContext(ContextData)
+
     const [name, setName] = useState("zzz")
     const [pass, setPass] = useState("zzz")
     const handleLogin = () => {

@@ -1,7 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { ContextData } from '../aplication/ContextData'
+import { LogSignContext } from '../aplication/LogSignContext'
 import '../style.css'
 
-export default function SignUp({ setLoginModal, loginModal, setSignList, signList, signModal, setSignModal }) {
+export default function SignUp() {
+    const { signList, setSignList } = useContext(ContextData)
+    const { loginModal, setLoginModal } = useContext(LogSignContext)
+    const { signModal, setSignModal } = useContext(LogSignContext)
+
     const [name, setName] = useState(null)
     const [pass, setPass] = useState(null)
     const [mail, setMail] = useState(null)
